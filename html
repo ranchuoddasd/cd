@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cloud Status Dashboard</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-color: #f3f4f6; /* gray-100 */
+      min-height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mx-auto p-4">
+    <h1 class="text-3xl font-bold text-center mb-4">Cloud Status Dashboard</h1>
+    <!-- Advertisement Banner -->
+    <div class="mb-8 text-center">
+      <a
+        href="https://example.com/ad"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="block bg-blue-100 p-4 rounded-lg shadow-md hover:bg-blue-200 transition"
+      >
+        <img
+          src="https://via.placeholder.com/728x90?text=Advertisement"
+          alt="Advertisement"
+          class="mx-auto max-w-full h-auto"
+        />
+        <p class="mt-2 text-blue-600">Support our dashboard! Click here to learn more.</p>
+      </a>
+    </div>
+    <!-- Cloud Provider Cards -->
+    <div id="dashboard" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+      <!-- Cards will be populated by JavaScript -->
+    </div>
+  </div>
+
+  <script>
+    // Configuration object
+    const CONFIG = {
+      REFRESH_INTERVAL_MS: 300000, // 5 minutes
+      STATUS_LINKS: {
+        aws: 'https://health.aws.amazon.com/health/status',
+        gcp: 'https://status.cloud.google.com/',
+        oci: 'https://ocistatus.oraclecloud.com/',
+        azure: 'https://status.azure.com/en-us/status/',
+        m365: 'https://status.cloud.microsoft.com/',
+      },
+    };
+
+    // Mock data for providers
+    const mockData = {
+      aws: {
+        status: 'Issues Detected',
+        incidents: [
+          { title: 'S3 Latency Issue', date: '2025-06-28', region: 'US-EAST-1', az: 'us-east-1a' },
+        ],
+        maintenance: [{ title: 'EC2 Scheduled Maintenance', date: '2025-07-10' }],
+      },
+      gcp: {
+        status: 'Issues Detected',
+        incidents: [{ title: 'Compute Engine Outage', date: '2025-06-25' }],
+        maintenance: [],
+      },
+      oci: {
+        status: 'Operational',
+        incidents: [],
+        maintenance: [{ title: 'Database Maintenance', date: '2025-07-12' }],
+      },
+      azure: {
+        status: 'Issues Detected',
+        incidents: [{ title: 'Storage Service Disruption', date: '2025-06-27' }],
+        maintenance: [],
+      },
+      m365: {
+        status: 'Operational',
+        incidents: [], // June 17, 2025 outage filtered out
+        maintenance: [],
+      },
+    };
+
+    function fetchData() {
+      console.log('Fetching data at:', new Date().toLocaleString());
+      const sevenDaysAgo = new Date();
+      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7); // June 24, 2025
+
+      const dashboard = document.getElementById('dashboard');
+      dashboard.innerHTML = ''; // Clear existing cards
+
+      Object.keys(mockData).forEach(provider => {
+        const data = mockData[provider];
+        // Filter incidents for the last 7 days
+        const filteredIncidents = data.incidents.filter(
+          incident => new Date(incident.date) >= sevenDaysAgo
+        );
+        data.status = filteredIncidents.length ? 'Issues Detected' : 'Operational';
+
+        // Create card HTML
+        const card = document.createElement('div');
+        card.className = 'bg-white p-6 rounded-lg shadow-md';
+        card.innerHTML = `
+          <h2 class="text-xl font-bold mb-4">${provider.toUpperCase()}</h2>
+          <p class="mb-2">
+            <span class="font-semibold">Status: </span>
+            <span class="${
+              data.status === 'Operational' ? 'text-green-600' : 'text-red-600'
+            }">${data.status}</span>
+          </p>
+          <div class="mb-4">
+            <h3 class="font-semibold">Recent Incidents (Last 7 Days)</h3>
+            ${
+              filteredIncidents.length > 0
+                ? `<ul class="list-disc pl-5">
+                     ${filteredIncidents
+                       .map(
+                         incident => `
+                           <li>
+                             <a
+                               href="${CONFIG.STATUS_LINKS[provider.toLowerCase()]}"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="text-blue-600 hover:underline"
+                             >
+                               ${
+                                 provider === 'aws' && incident.title === 'S3 Latency Issue'
+                                   ? `${incident.title} - ${incident.date} (Region: US-EAST-1, AZ: us-east-1a)`
+                                   : `${incident.title} - ${incident.date}`
+                               }
+                             </a>
+                           </li>
+                         `
+                       )
+                       .join('')}
+                   </ul>`
+                : '<p>No recent incidents in the last 7 days</p>'
+            }
+          </div>
+          <div>
+            <h3 class="font-semibold">Scheduled Maintenance</h3>
+            ${
+              data.maintenance.length > 0
+                ? `<ul class="list-disc pl-5">
+                     ${data.maintenance
+                       .map(event => `<li>${event.title} - ${event.date}</li>`)
+                       .join('')}
+                   </ul>`
+                : '<p>No scheduled maintenance</p>'
+            }
+          </div>
+        `;
+        dashboard.appendChild(card);
+      });
+      console.log('Data fetch complete:', mockData);
+    }
+
+    // Initial fetch
+    fetchData();
+
+    // Refresh every 5 minutes
+    const interval = setInterval(() => {
+      console.log('Scheduled refresh triggered at:', new Date().toLocaleString());
+      fetchData();
+    }, CONFIG.REFRESH_INTERVAL_MS);
+
+    // Cleanup interval on page unload
+    window.addEventListener('unload', () => {
+      console.log('Cleaning up interval');
+      clearInterval(interval);
+    });
+  </script>
+</body>
+</html>
