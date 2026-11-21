@@ -1,0 +1,21 @@
+# Node
+node_modules/
+dist/
+build/
+coverage/
+
+# Environment and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Logs
+*.log
+
+# IDE and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
