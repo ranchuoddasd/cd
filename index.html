@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Illustrative multi-cloud service status dashboard prototype">
+  <title>Multi-Cloud Status Dashboard — Demo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-100 text-slate-900">
+  <main class="mx-auto max-w-7xl px-4 py-10">
+    <header class="mb-8">
+      <p class="text-sm font-semibold uppercase tracking-wide text-slate-600">Portfolio prototype · Sample data</p>
+      <h1 class="mt-2 text-3xl font-bold">Multi-Cloud Status Dashboard</h1>
+      <p class="mt-2 max-w-3xl text-slate-600">A single-screen concept for reviewing service status, incidents and maintenance across cloud providers. The information below is illustrative and is not live operational data.</p>
+      <p class="mt-4 rounded-md border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900"><strong>Demo notice:</strong> All status values, incidents and maintenance entries are static examples. No provider APIs are queried.</p>
+    </header>
+    <section aria-label="Provider status examples" class="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+      <article class="rounded-xl bg-white p-5 shadow-sm">
+        <h2 class="text-lg font-semibold">Amazon Web Services</h2>
+        <p class="mt-3 text-sm"><strong>Example status:</strong> Issues detected</p>
+        <p class="mt-3 text-sm font-semibold">Sample incident</p>
+        <p class="text-sm text-slate-600">Object storage latency · Example only</p>
+        <a class="mt-4 inline-block text-sm text-blue-700 underline" href="https://health.aws.amazon.com/health/status" target="_blank" rel="noopener noreferrer">Official status page</a>
+      </article>
+      <article class="rounded-xl bg-white p-5 shadow-sm">
+        <h2 class="text-lg font-semibold">Google Cloud</h2>
+        <p class="mt-3 text-sm"><strong>Example status:</strong> Operational</p>
+        <p class="mt-3 text-sm font-semibold">Sample incident</p>
+        <p class="text-sm text-slate-600">No sample incident listed</p>
+        <a class="mt-4 inline-block text-sm text-blue-700 underline" href="https://status.cloud.google.com/" target="_blank" rel="noopener noreferrer">Official status page</a>
+      </article>
+      <article class="rounded-xl bg-white p-5 shadow-sm">
+        <h2 class="text-lg font-semibold">Oracle Cloud</h2>
+        <p class="mt-3 text-sm"><strong>Example status:</strong> Operational</p>
+        <p class="mt-3 text-sm font-semibold">Sample maintenance</p>
+        <p class="text-sm text-slate-600">Database maintenance · Example only</p>
+        <a class="mt-4 inline-block text-sm text-blue-700 underline" href="https://ocistatus.oraclecloud.com/" target="_blank" rel="noopener noreferrer">Official status page</a>
+      </article>
+      <article class="rounded-xl bg-white p-5 shadow-sm">
+        <h2 class="text-lg font-semibold">Microsoft Azure</h2>
+        <p class="mt-3 text-sm"><strong>Example status:</strong> Issues detected</p>
+        <p class="mt-3 text-sm font-semibold">Sample incident</p>
+        <p class="text-sm text-slate-600">Storage service disruption · Example only</p>
+        <a class="mt-4 inline-block text-sm text-blue-700 underline" href="https://status.azure.com/en-us/status/" target="_blank" rel="noopener noreferrer">Official status page</a>
+      </article>
+      <article class="rounded-xl bg-white p-5 shadow-sm">
+        <h2 class="text-lg font-semibold">Microsoft 365</h2>
+        <p class="mt-3 text-sm"><strong>Example status:</strong> Operational</p>
+        <p class="mt-3 text-sm font-semibold">Sample incident</p>
+        <p class="text-sm text-slate-600">No sample incident listed</p>
+        <a class="mt-4 inline-block text-sm text-blue-700 underline" href="https://status.cloud.microsoft/" target="_blank" rel="noopener noreferrer">Official status page</a>
+      </article>
+    </section>
+    <footer class="mt-8 border-t border-slate-200 pt-4 text-sm text-slate-500">Demonstration only. Consult each provider's official status page for current service health.</footer>
+  </main>
+</body>
+</html>
