@@ -1,23 +1,29 @@
 # Prototype Notes
 
 ## Purpose
-This repository contains a multi-cloud service-status dashboard UI concept.
+This repository explores a unified interface for viewing cloud-provider service status, incidents and scheduled maintenance.
 
-## Existing files
-- `html`: standalone dashboard mockup with provider cards and static sample data.
-- `home.js`: React/TypeScript state-management prototype that creates provider mock data.
-- `CloudProviderCard.js`: reusable React/TypeScript card that renders status, incidents, maintenance, and provider links.
+## Current implementations
+- `index.html`: standalone static HTML/Tailwind demonstration.
+- `src/pages/Home.tsx`: React/TypeScript page using illustrative provider data.
+- `src/components/CloudProviderCard.tsx`: reusable typed provider card.
 
-## Current behavior
-The HTML file uses hard-coded sample incidents and maintenance. The React prototype similarly initializes and creates mock data. Neither implementation queries live status endpoints. Refreshing or filtering static data must not be described as live monitoring.
+The standalone page and React implementation are separate presentation prototypes. They are not duplicate files and are retained as distinct examples.
+
+## Current behavior and limitations
+- All statuses, incidents and maintenance events are illustrative and hard-coded.
+- No live provider status endpoint or API is queried.
+- There is no backend, persistence, authentication, alerting or automated test suite.
+- The React source requires a host React/TypeScript build environment; this repository does not yet provide package metadata or build scripts.
 
 ## Next implementation steps
-1. Define a normalized provider-status model.
-2. Implement a server-side adapter for official status sources.
-3. Handle provider-specific schemas, errors, and rate limits.
-4. Include source URL, last updated time, and data freshness.
-5. Add tests for incident filtering and status mapping.
-6. Restrict status links and safely render provider-supplied text.
+1. Define and validate a normalized provider-status schema.
+2. Implement server-side adapters for official provider status sources.
+3. Handle provider-specific payloads, errors, timeouts and rate limits.
+4. Include source URLs, source timestamps and retrieval freshness.
+5. Represent stale or unavailable data as Unknown.
+6. Add tests for normalization, incident filtering and status mapping.
+7. Safely render provider-supplied text.
 
 ## Portfolio hygiene
-The source files are preserved. This documentation adds clarity without deleting or rewriting experimental code.
+The original prototypes are retained in Git history. Standardized replacements are now organized under descriptive filenames and directories. No original implementation was deleted as part of this documentation update.
